@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyVault - Find, Save & Share Academic Resources</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal-gradient-start: #7DD3C0;
+            --teal-gradient-end: #5DAFBE;
+            --card-bg: #f8f8f8;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+            --blue-primary: #4A7BA7;
+            --red-pdf: #D45B5B;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--teal-gradient-start) 0%, var(--teal-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(5deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand {
+            flex: 1;
+        }
+
+        .brand h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand p {
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #8FD14F 0%, #7AB839 100%);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(143, 209, 79, 0.4);
+        }
+
+        .upload-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .campus-badge {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-soft);
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .campus-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 30px;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 0 10px 0 25px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            opacity: 0.4;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 20px 10px;
+            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
+            background: transparent;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-btn {
+            background: var(--blue-primary);
+            border: none;
+            border-radius: 8px;
+            padding: 15px 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(74, 123, 167, 0.4);
+            background: #3d6a91;
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar Filters */
+        .sidebar {
+            animation: slideRight 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            color: var(--text-dark);
+        }
+
+        .filter-select:hover {
+            background: white;
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Resources Grid */
+        .resources-section {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* Resource Card */
+        .resource-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            display: flex;
+            gap: 20px;
+            animation: popIn 0.5s ease-out both;
+        }
+
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.15s; }
+        .resource-card:nth-child(3) { animation-delay: 0.2s; }
+        .resource-card:nth-child(4) { animation-delay: 0.25s; }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .resource-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .resource-card:hover .resource-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .icon-pdf {
+            background: linear-gradient(135deg, #E57373 0%, #D45B5B 100%);
+        }
+
+        .icon-link {
+            background: linear-gradient(135deg, #5DA8DC 0%, #4A7BA7 100%);
+        }
+
+        .icon-video {
+            background: linear-gradient(135deg, #5DA8DC 0%, #4A7BA7 100%);
+        }
+
+        .resource-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .resource-content {
+            flex: 1;
+        }
+
+        .resource-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .resource-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .resource-uploader {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .resource-uploader strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .resource-votes {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--blue-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .vote-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Recently Viewed Section */
+        .recently-viewed {
+            margin-top: 40px;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .recent-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: popIn 0.5s ease-out both;
+        }
+
+        .recent-card:nth-child(1) { animation-delay: 0.1s; }
+        .recent-card:nth-child(2) { animation-delay: 0.15s; }
+        .recent-card:nth-child(3) { animation-delay: 0.2s; }
+
+        .recent-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .recent-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .recent-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .recent-content {
+            flex: 1;
+        }
+
+        .recent-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .recent-votes {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--blue-primary);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .recent-votes .vote-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            header {
+                flex-wrap: wrap;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .brand h1 {
+                font-size: 2rem;
+            }
+
+            .sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .recent-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resources-grid {
+                gap: 15px;
+            }
+
+            .header-right {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .upload-btn,
+            .campus-badge {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <div class="logo">
+                    <img src="study walt logo.JPG" alt="StudyVault Logo">
+                </div>
+                <div class="brand">
+                    <h1>StudyVault</h1>
+                    <p>Find, save & share academic resources effortlessly</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="upload-btn">
+                    <svg class="upload-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"/>
+                    </svg>
+                    Upload
+                </button>
+                <div class="campus-badge">
+                    <svg class="campus-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+                    </svg>
+                    Part of Campus Mitra
+                </div>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-bar">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" placeholder="Search for &quot;Database Management notes&quot; or &quot;2023 Math PYQ&quot;...">
+                <button class="search-btn">
+                    <svg width="24" height="24" fill="white" viewBox="0 0 24 24">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar">
+                <div class="filter-section">
+                    <h3>Semester:</h3>
+                    <select class="filter-select">
+                        <option>Select Semester</option>
+                        <option>Semester 1</option>
+                        <option>Semester 2</option>
+                        <option>Semester 3</option>
+                        <option>Semester 4</option>
+                        <option>Semester 5</option>
+                        <option>Semester 6</option>
+                        <option>Semester 7</option>
+                        <option>Semester 8</option>
+                    </select>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Subject Type:</h3>
+                    <select class="filter-select">
+                        <option>Select Type</option>
+                        <option>Notes</option>
+                        <option>PYQ Papers</option>
+                        <option>Video Lectures</option>
+                        <option>Reference Links</option>
+                        <option>Study Materials</option>
+                    </select>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Sort by:</h3>
+                    <select class="filter-select">
+                        <option>Most Upvoted</option>
+                        <option>Recently Added</option>
+                        <option>Most Downloaded</option>
+                        <option>Alphabetical</option>
+                    </select>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="resources-section">
+                <!-- Resources Grid -->
+                <div class="resources-grid">
+                    <!-- Resource 1 -->
+                    <div class="resource-card">
+                        <div class="resource-icon icon-pdf">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M9 13h6"/>
+                                <path d="M9 17h6"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-title">Operating Systems - Unit 2</div>
+                            <div class="resource-meta">
+                                <div class="resource-uploader">Uploaded by: <strong>Rahul S.</strong></div>
+                                <div class="resource-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>42 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resource 2 -->
+                    <div class="resource-card">
+                        <div class="resource-icon icon-link">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-title">Database Management Basics</div>
+                            <div class="resource-meta">
+                                <div class="resource-uploader">Uploaded by: <strong>Ananya T.</strong></div>
+                                <div class="resource-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>30 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resource 3 -->
+                    <div class="resource-card">
+                        <div class="resource-icon icon-video">
+                            <svg viewBox="0 0 24 24">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-title">Math PYQ Solutions</div>
+                            <div class="resource-meta">
+                                <div class="resource-uploader">Uploaded by: <strong>Vikram R.</strong></div>
+                                <div class="resource-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>55 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Resource 4 -->
+                    <div class="resource-card">
+                        <div class="resource-icon icon-pdf">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                                <path d="M14 2v6h6"/>
+                                <path d="M9 13h6"/>
+                                <path d="M9 17h6"/>
+                            </svg>
+                        </div>
+                        <div class="resource-content">
+                            <div class="resource-title">Data Structures - Unit 3</div>
+                            <div class="resource-meta">
+                                <div class="resource-uploader">Uploaded by: <strong>Priya M.</strong></div>
+                                <div class="resource-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>38 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recently Viewed Section -->
+                <div class="recently-viewed">
+                    <h2 class="section-title">Recently Viewed</h2>
+                    <div class="recent-grid">
+                        <!-- Recent Item 1 -->
+                        <div class="recent-card">
+                            <div class="recent-icon icon-pdf">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                                    <path d="M14 2v6h6"/>
+                                    <path d="M9 13h6"/>
+                                    <path d="M9 17h6"/>
+                                </svg>
+                            </div>
+                            <div class="recent-content">
+                                <div class="recent-title">Compiler Design Notes</div>
+                                <div class="recent-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>42 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Item 2 -->
+                        <div class="recent-card">
+                            <div class="recent-icon icon-link">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                </svg>
+                            </div>
+                            <div class="recent-content">
+                                <div class="recent-title">Algorithms – Unit 1</div>
+                                <div class="recent-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>29 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Item 3 -->
+                        <div class="recent-card">
+                            <div class="recent-icon icon-video">
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="5 3 19 12 5 21 5 3"/>
+                                </svg>
+                            </div>
+                            <div class="recent-content">
+                                <div class="recent-title">Physics Video Lecture</div>
+                                <div class="recent-votes">
+                                    <svg class="vote-icon" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                                    </svg>
+                                    <span>51 Upvotes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

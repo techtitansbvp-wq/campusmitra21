@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Mitra - Your All-in-One Platform for Student Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal-gradient-start: #7DD3C0;
+            --teal-gradient-end: #5DAFBE;
+            --card-bg: #f8f8f8;
+            --text-dark: #1a1a1a;
+            --text-muted: #666;
+            --sage-green: #7FA896;
+            --sage-green-dark: #6B9480;
+            --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--teal-gradient-start) 0%, var(--teal-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(5deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .brand h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.8rem;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .brand p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .login-btn {
+            background: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-soft);
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .user-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Module Cards Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 80px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            animation: popIn 0.5s ease-out both;
+        }
+
+        .module-card:nth-child(1) { animation-delay: 0.1s; }
+        .module-card:nth-child(2) { animation-delay: 0.15s; }
+        .module-card:nth-child(3) { animation-delay: 0.2s; }
+        .module-card:nth-child(4) { animation-delay: 0.25s; }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .module-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #7FA896 0%, #6B9480 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .module-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .module-card:hover .module-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .module-content {
+            flex: 1;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .module-description {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+        }
+
+        .cta-text {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .get-started-btn {
+            background: var(--sage-green);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .get-started-btn:hover {
+            background: var(--sage-green-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            opacity: 0.8;
+            animation: fadeIn 0.8s ease-out 0.7s both;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .login-btn {
+                align-self: flex-end;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .brand h1 {
+                font-size: 2.2rem;
+            }
+
+            .module-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .module-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+
+            .module-title {
+                font-size: 1.5rem;
+            }
+
+            .module-description {
+                font-size: 1rem;
+            }
+
+            .cta-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <div class="logo">
+                    <img src="campus.JPG" alt="Campus Mitra Logo">
+                </div>
+                <div class="brand">
+                    <h1>Campus Mitra</h1>
+                    <p>Your all-in-one platform for student life</p>
+                </div>
+            </div>
+            <button class="login-btn">
+                <svg class="user-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                </svg>
+                Log In
+            </button>
+        </header>
+
+        <!-- Module Cards -->
+        <div class="modules-grid">
+            <!-- BookLoop -->
+            <a href="bookloop.html" class="module-card">
+                <div class="module-icon">
+                    <img src="book_loop.JPG" alt="BookLoop">
+                </div>
+                <div class="module-content">
+                    <div class="module-title">BookLoop</div>
+                    <div class="module-description">Buy & sell academic books and notes easily.</div>
+                </div>
+            </a>
+
+            <!-- StudyVault -->
+            <a href="studywalt.html" class="module-card">
+                <div class="module-icon">
+                    <img src="study_walt logo.JPG" alt="StudyVault">
+                </div>
+                <div class="module-content">
+                    <div class="module-title">StudyVault</div>
+                    <div class="module-description">Find, save & share academic resources effortlessly.</div>
+                </div>
+            </a>
+
+            <!-- AcadTrack -->
+            <a href="acadtrack.html" class="module-card">
+                <div class="module-icon">
+                    <img src="acadtrack.JPG" alt="AcadTrack">
+                </div>
+                <div class="module-content">
+                    <div class="module-title">AcadTrack</div>
+                    <div class="module-description">Track assignments, exams, and semesters seamlessly.</div>
+                </div>
+            </a>
+
+            <!-- SpendSmart -->
+            <a href="spendsmart.html" class="module-card">
+                <div class="module-icon">
+                    <img src="spendsmart.JPG" alt="SpendSmart">
+                </div>
+                <div class="module-content">
+                    <div class="module-title">SpendSmart</div>
+                    <div class="module-description">Manage your student expenses and budgets smartly.</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <p class="cta-text">
+                Join 1,000+ students who rely on Campus Mitra to make their<br>
+                student life easier and more organized.
+            </p>
+            <button class="get-started-btn">Get Started</button>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            © 2024 Campus Mitra | Designed for students, by students.
+        </footer>
+    </div>
+</body>
+</html>
